@@ -1,0 +1,157 @@
+import random
+
+def dealahand(arg1,arg2):
+#function wbich puts 2 random cards in dealers hand and then players hand
+    dealerhand.clear()
+    playerhand.clear()
+    arg1.append(random.choice(ranks))
+    arg1.append(random.choice(suits))
+    arg1.append(random.choice(ranks))
+    arg1.append(random.choice(suits))
+    while arg1[2]+arg1[3] == arg1[0]+arg1[1]:
+        arg1[2] = random.choice(ranks)
+        arg1[3] = random.choice(suits)
+    arg2.append(random.choice(ranks))
+    arg2.append(random.choice(suits))
+    while (arg2[0]+arg2[1] == arg1[0]+arg1[1]) or (arg2[0]+arg2[1] == arg1[2]+arg1[3]):
+            arg2[0] = random.choice(ranks)
+            arg2[1] = random.choice(suits)    
+        
+    arg2.append(random.choice(ranks))
+    arg2.append(random.choice(suits))
+    while (arg2[2]+arg2[3] == arg2[0]+arg2[1]) or (arg2[2]+arg2[3] == arg1[0]+arg1[1]) or (arg2[2]+arg2[3] == arg1[2]+arg1[3]):
+                arg2[2] = random.choice(ranks)
+                arg2[3] = random.choice(suits)
+  
+  
+  
+  def hit(arg):
+  #Function which puts random card in dealer or players hand
+    if arg == dealerhand:
+        checklist = "".join(playerhand+arg)
+    else:
+        checklist = "".join(dealerhand+arg)
+    arg.append(random.choice(ranks))
+    arg.append(random.choice(suits))
+    while arg[len(arg)-2]+arg[len(arg)-1] in checklist:
+        arg.pop()
+        arg.pop()
+        arg.append(random.choice(ranks))
+        arg.append(random.choice(suits))
+        
+   
+   
+   
+#Main game below#
+
+suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
+ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
+values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10,
+         'Queen':10, 'King':10, 'Ace':11}
+dealerhand = []
+playerhand = []
+dealerhandsum = []
+playerhandsum = []
+    
+'''
+answer = input('Ready to play BlackJack? Y/N ? ').lower()
+while answer != 'y':
+    answer = input('Ready to play BlackJack? Y/N ? ').lower()
+    
+playername = input('What is your name (variable name)')
+
+'''
+print('Dealer is shuffling...')
+
+dealahand(dealerhand, playerhand)
+
+     
+    
+print('your (face down) cards are...')
+print('Dealer hand is ') , print(dealerhand)
+print('Player hand is ' ),  print(playerhand)
+    
+
+hitormiss = 'p'
+while hitormiss not in ['h','m']:
+    hitormiss = input('Hit or Miss? H/M  ').lower()
+
+while hitormiss == 'h':
+    hit(playerhand)
+    playerhandsum.clear()
+    for x in playerhand[::2]:
+            playerhandsum.append(values[x])
+    print(playerhandsum)
+    if sum(playerhandsum) > 21:
+        print('Player Bust')
+        break
+    elif sum(playerhandsum) == 21:
+        print('player got 21')
+    hitormiss = input('Hit or Miss again? H/M  ').lower()
+    while hitormiss not in ['h','m']:
+        hitormiss = input('Hit or Miss again, spell it properly? H/M  ').lower()
+
+if sum(playerhandsum) > 21:
+    print('Player Bust i already told you')
+elif sum(playerhandsum) == 21:
+    print('player wins with 21')
+else:
+    playerhandsum.clear()
+    for x in playerhand[::2]:
+            playerhandsum.append(values[x])
+   
+    
+    dealerhandsum.clear()
+
+    for x in dealerhand[::2]:
+        dealerhandsum.append(values[x])
+
+
+
+    while sum(dealerhandsum) < 17:
+        hit(dealerhand)
+        print(dealerhand)
+        dealerhandsum.clear()
+
+        for x in dealerhand[::2]:
+            dealerhandsum.append(values[x])
+        print(dealerhandsum)
+    
+    if sum(dealerhandsum) > 21:
+        print('dealer bust over 21')
+    elif sum(dealerhandsum) == 21:
+        print('dealer wins with 21')
+    elif (sum(dealerhandsum) > sum(playerhandsum)) and (sum(dealerhandsum) < 21):
+        print('dealer wins with more than player')
+
+    else:
+        print('player wins')
+    
+
+print(dealerhandsum)
+print(dealerhand)
+print(playerhandsum)
+print(playerhand)
+   
+print('end of game')
+
+
+
+
+
+class player:
+            
+        def __init__(self,playername,playermoney):
+            self.playername = playername
+            self.playermoney = playermoney
+        
+        def withdraw(self,wdamount):
+            self.wdamount = wdamount
+            if self.wdamount > self.playermoney:
+                print('Sorry not enough funds!')
+            else:
+                self.playermoney = self.playermoney - self.wdamount
+                
+            
+    
+    
