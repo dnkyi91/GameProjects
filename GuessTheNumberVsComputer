@@ -1,0 +1,91 @@
+import random
+
+def livesequation(smaller,bigger):
+    guesscount = bigger + 1 - smaller
+    list = []
+    while guesscount >= 1:
+        list.append(round(guesscount))
+        guesscount = round(guesscount) / 2
+    return (len(list))
+
+def guesscheck():
+    global guess
+    global numOfLives
+    while type(guess)!= int:
+        guess = input('What is your guess?')
+        try:
+            guess = int(guess)
+        except:
+            print('You have not entered an interger amount')
+    if guess == storednum:
+        return
+    else:
+        numOfLives = numOfLives - 1
+        if guess < storednum:
+            print(f'Go higher, you have {numOfLives} guesses left')
+        else:
+            print(f'Go lower, you now have {numOfLives} guesses left')
+            
+def pasttensenum(num):
+    if num > 21:
+        num = int(str(num)[-1])
+    if num == 1:
+        return 'st'
+    if num == 2:
+        return 'nd'
+    if num == 3:
+        return 'rd'
+    if num < 21:
+        return 'th'
+    
+    
+
+print('Hello this is the guess the number game')
+playername = input('What is your name')
+small = input(f'{playername},What is your bottom limit')
+try:
+    small = int(small)
+except:
+    while type(small) != int:
+        small = input(f'{playername},You need to enter a whole number')
+        try:
+            small = int(small)       
+        except:       
+            print('You dumb?')
+big = input(f'{playername},What is your upper limit')
+try:
+    big=int(big)
+except:   
+    while type(big) != int:
+        big = input(f'{playername},You need to enter a whole number')
+        try:
+            big = int(big)    
+        except:
+            print('You dumb I see')   
+numOfLives = livesequation(small,big)
+OGnumofLives = numOfLives
+storednum = random.randint(small,big)
+print(f'So Im thinking of a number between {small} and {big}. You have {numOfLives} guesses to get the answer')
+lifenumber = 1
+guesslist = []
+
+while lifenumber <= OGnumofLives: 
+    guess = ''
+    guesscheck()
+ 
+    
+    
+    if guess == storednum:
+        print(f'Congrats you guessed the correct number ({storednum}) on your {str(lifenumber)+pasttensenum(lifenumber)} go. You had a remaining {numOfLives} lives left ')
+        break
+    elif lifenumber == OGnumofLives:
+            print(f"Sorry seems like you couldn't get the right answer in {OGnumofLives} guesses. The number I was looking for was {storednum}")
+            break
+    else:
+        guesslist.append(guess)
+        lifenumber = lifenumber + 1
+        print('Prev answers are',guesslist,f'...Need a number between {small} and {big}')
+
+print('game done')
+
+
